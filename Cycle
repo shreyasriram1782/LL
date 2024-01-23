@@ -1,0 +1,30 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+def has_cycle(head):
+    if not head or not head.next:
+        return False
+
+    tortoise = head
+    hare = head.next
+
+    while tortoise != hare:
+        if not hare or not hare.next:
+            return False
+        tortoise = tortoise.next
+        hare = hare.next.next
+
+    return True
+
+# Example usage:
+# Creating a linked list with a cycle
+head = Node(1)
+head.next = Node(2)
+head.next.next = Node(3)
+head.next.next.next = Node(4)
+head.next.next.next.next = head.next  # Creating a cycle
+
+has_cycle_result = has_cycle(head)
+print("Has Cycle:", has_cycle_result)
