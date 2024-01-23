@@ -1,0 +1,57 @@
+class ListNode:
+    def __init__(self, value=0, next=None):
+        self.value = value
+        self.next = next
+
+def reverse_k_group(head, k):
+    # Helper function to reverse a sublist
+    def reverse_sublist(start, end):
+        prev = None
+        current = start
+
+        while current != end:
+            next_node = current.next
+            current.next = prev
+            prev = current
+            current = next_node
+
+        return prev
+
+    # Helper function to get the length of the linked list
+    def get_length(node):
+        length = 0
+        while node:
+            length += 1
+            node = node.next
+        return length
+
+    # Get the length of the linked list
+    length = get_length(head)
+
+    # Dummy node to simplify edge cases
+    dummy = ListNode(0)
+    dummy.next = head
+    prev_group_end = dummy
+
+    while length >= k:
+        group_start = prev_group_end.next
+        group_end = group_start
+
+        # Move to the end of the current group
+        for _ in range(k - 1):
+            group_end = group_end.next
+
+        next_group_start = group_end.next
+
+        # Reverse the current group
+        reverse_sublist(group_start, next_group_start)
+
+        # Connect the reversed group to the previous group
+        prev_group_end.next = group_end
+        group_start.next = next_group_start
+
+        # Update pointers for the next iteration
+        prev_group_end = group_start
+        length -= k
+
+    return dummy.next
