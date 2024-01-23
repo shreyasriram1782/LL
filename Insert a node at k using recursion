@@ -1,0 +1,50 @@
+# python program for the above approach
+class Node:
+	def __init__(self, data):
+		self.data = data
+		self.next = None
+
+
+def insertatk(head, k, data):
+	if(head is None):
+		return Node(data)
+
+	if(k == 1):
+		newnode = Node(data)
+		newnode.next = head
+		head = newnode
+		return head
+	else:
+		# we do k-1 so as to reach the required place
+		head.next = insertatk(head.next, k-1, data)
+	return head
+
+
+def printList(head):
+	temp = head
+	while(temp is not None):
+		print(temp.data, end=" ")
+		temp = temp.next
+
+
+# driver code
+head = Node(1)
+n1 = Node(2)
+head.next = n1
+n2 = Node(3)
+n1.next = n2
+n3 = Node(4)
+n2.next = n3
+n4 = Node(5)
+n3.next = n4
+n5 = Node(6)
+n4.next = n5
+n6 = Node(7)
+n5.next = n6
+n6.next = None
+
+k = 4
+data = 100
+
+printList(insertatk(head, k, data))
+# this code is contributed by Kirti Agarwal
