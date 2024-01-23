@@ -1,0 +1,27 @@
+class ListNode:
+    def __init__(self, value=0, next=None):
+        self.value = value
+        self.next = next
+
+def remove_nth_from_end(head, n):
+    # Create a dummy node to simplify edge cases
+    dummy = ListNode(0)
+    dummy.next = head
+
+    # Initialize two pointers
+    fast = dummy
+    slow = dummy
+
+    # Move the fast pointer ahead by n+1 nodes
+    for _ in range(n + 1):
+        fast = fast.next
+
+    # Move both pointers until the fast pointer reaches the end
+    while fast:
+        fast = fast.next
+        slow = slow.next
+
+    # Remove the nth node from the end
+    slow.next = slow.next.next
+
+    return dummy.next
