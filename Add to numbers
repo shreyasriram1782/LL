@@ -1,0 +1,39 @@
+class ListNode:
+    def __init__(self, value=0, next=None):
+        self.value = value
+        self.next = next
+
+def add_two_numbers(l1, l2):
+    dummy_head = ListNode()
+    current = dummy_head
+    carry = 0
+
+    while l1 or l2 or carry:
+        x = l1.value if l1 else 0
+        y = l2.value if l2 else 0
+
+        # Calculate the sum and carry
+        total_sum = x + y + carry
+        carry = total_sum // 10
+        current.next = ListNode(total_sum % 10)
+
+        # Move to the next nodes
+        if l1:
+            l1 = l1.next
+        if l2:
+            l2 = l2.next
+        current = current.next
+
+    return dummy_head.next
+
+# Example usage:
+# Creating two linked lists representing numbers in reverse order
+l1 = ListNode(2, ListNode(4, ListNode(3)))
+l2 = ListNode(5, ListNode(6, ListNode(4)))
+
+result = add_two_numbers(l1, l2)
+
+# Displaying the result
+while result:
+    print(result.value, end=" ")
+    result = result.next
