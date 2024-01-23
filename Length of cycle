@@ -1,0 +1,39 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+def find_cycle_length(head):
+    if not head or not head.next:
+        return 0
+
+    # Phase 1: Detect the meeting point
+    tortoise = head
+    hare = head.next
+
+    while tortoise != hare:
+        if not hare or not hare.next:
+            return 0
+        tortoise = tortoise.next
+        hare = hare.next.next
+
+    # Phase 2: Find the length of the cycle
+    count = 1
+    hare = hare.next
+
+    while tortoise != hare:
+        hare = hare.next
+        count += 1
+
+    return count
+
+# Example usage:
+# Creating a linked list with a cycle
+head = Node(1)
+head.next = Node(2)
+head.next.next = Node(3)
+head.next.next.next = Node(4)
+head.next.next.next.next = head.next  # Creating a cycle
+
+cycle_length = find_cycle_length(head)
+print("Cycle Length:", cycle_length)
