@@ -1,0 +1,52 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+def merge_sorted_lists(list1, list2):
+    dummy_head = Node(0)
+    current = dummy_head
+
+    while list1 is not None and list2 is not None:
+        if list1.data < list2.data:
+            current.next = list1
+            list1 = list1.next
+        else:
+            current.next = list2
+            list2 = list2.next
+        current = current.next
+
+    # If one of the lists is exhausted, append the remaining elements from the other list
+    if list1 is not None:
+        current.next = list1
+    elif list2 is not None:
+        current.next = list2
+
+    return dummy_head.next
+
+def display_list(head):
+    current = head
+    while current:
+        print(current.data, end=" ")
+        current = current.next
+    print()
+
+# Example usage:
+list1 = Node(1)
+list1.next = Node(3)
+list1.next.next = Node(5)
+
+list2 = Node(2)
+list2.next = Node(4)
+list2.next.next = Node(6)
+
+print("List 1:")
+display_list(list1)
+
+print("List 2:")
+display_list(list2)
+
+merged_list = merge_sorted_lists(list1, list2)
+
+print("Merged List:")
+display_list(merged_list)
